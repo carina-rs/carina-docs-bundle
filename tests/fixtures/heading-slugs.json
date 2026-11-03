@@ -1,0 +1,35 @@
+[
+  {
+    "name": "unicode, categories, and duplicate headings",
+    "headings": [
+      "# Héllö, 世界! A_B-C",
+      "## Héllö, 世界! A_B-C",
+      "### A½Ⅳ٣ e\u0301"
+    ],
+    "ids": [
+      "héllö-世界-a_b-c",
+      "héllö-世界-a_b-c-1",
+      "a٣-e"
+    ]
+  },
+  {
+    "name": "repeated headings allocate linear suffixes",
+    "headings": ["# Repeat", "## Repeat", "### Repeat", "#### Repeat"],
+    "ids": ["repeat", "repeat-1", "repeat-2", "repeat-3"]
+  },
+  {
+    "name": "generated suffix is never reused",
+    "headings": ["# A", "## A", "### A-1"],
+    "ids": ["a", "a-1", "a-1-1"]
+  },
+  {
+    "name": "allocator skips an already used suffixed slug",
+    "headings": ["# a", "## a-1", "### a"],
+    "ids": ["a", "a-1", "a-2"]
+  },
+  {
+    "name": "inline code is flattened before slugging",
+    "headings": ["### `options`", "### `allowed_methods` (AllowedMethods)"],
+    "ids": ["options", "allowed_methods-allowedmethods"]
+  }
+]

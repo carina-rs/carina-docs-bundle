@@ -1,0 +1,120 @@
+{
+  "services": [
+    {
+      "id": "acm",
+      "title": "ACM",
+      "resources": [
+        "acm_certificate"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "ec2",
+      "title": "EC2",
+      "resources": [
+        "ec2_egress_only_internet_gateway",
+        "ec2_eip",
+        "ec2_flow_log",
+        "ec2_internet_gateway",
+        "ec2_nat_gateway",
+        "ec2_route",
+        "ec2_route_table",
+        "ec2_security_group",
+        "ec2_security_group_egress",
+        "ec2_security_group_ingress",
+        "ec2_subnet",
+        "ec2_subnet_route_table_association",
+        "ec2_transit_gateway",
+        "ec2_transit_gateway_attachment",
+        "ec2_vpc",
+        "ec2_vpc_endpoint",
+        "ec2_vpc_gateway_attachment",
+        "ec2_vpc_peering_connection",
+        "ec2_vpn_gateway"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "iam",
+      "title": "IAM",
+      "resources": [
+        "iam_role"
+      ],
+      "data_sources": [
+        "iam_roles"
+      ]
+    },
+    {
+      "id": "identitystore",
+      "title": "Identity Store",
+      "resources": [],
+      "data_sources": [
+        "identitystore_user"
+      ]
+    },
+    {
+      "id": "logs",
+      "title": "CloudWatch Logs",
+      "resources": [
+        "logs_log_group"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "organizations",
+      "title": "Organizations",
+      "resources": [
+        "organizations_account",
+        "organizations_organization"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "route53",
+      "title": "Route 53",
+      "resources": [
+        "route53_record_set"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "s3",
+      "title": "S3",
+      "resources": [
+        "s3_bucket",
+        "s3_bucket_acl",
+        "s3_bucket_cors_configuration",
+        "s3_bucket_lifecycle_configuration",
+        "s3_bucket_logging",
+        "s3_bucket_notification_configuration",
+        "s3_bucket_object_lock_configuration",
+        "s3_bucket_ownership_controls",
+        "s3_bucket_policy",
+        "s3_bucket_public_access_block",
+        "s3_bucket_replication_configuration",
+        "s3_bucket_server_side_encryption_configuration",
+        "s3_bucket_versioning",
+        "s3_bucket_website_configuration"
+      ],
+      "data_sources": [
+        "s3_bucket"
+      ]
+    },
+    {
+      "id": "sqs",
+      "title": "SQS",
+      "resources": [
+        "sqs_queue"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "sts",
+      "title": "STS",
+      "resources": [],
+      "data_sources": [
+        "sts_caller_identity"
+      ]
+    }
+  ]
+}

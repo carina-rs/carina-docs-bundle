@@ -1,0 +1,82 @@
+name: Docs navigation coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checker-tests:
+    name: Checker tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: >-
+          python3 -m unittest discover
+          -s tests
+          -p 'test_check_docs_navigation_coverage.py'
+
+  aws:
+    name: carina-rs/aws
+    needs: checker-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out docs bundle checker
+        uses: actions/checkout@v4
+        with:
+          path: docs-bundle
+      - name: Check out provider main
+        uses: actions/checkout@v4
+        with:
+          repository: carina-rs/carina-provider-aws
+          ref: main
+          path: provider
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: provider -> target
+      - name: Generate documentation
+        working-directory: provider
+        run: ./scripts/generate-docs.sh
+      - name: Build docs bundle
+        working-directory: provider
+        run: python3 scripts/docs-bundle.py build "$RUNNER_TEMP/carina-provider-aws-docs.tar.gz"
+      - name: Check docs navigation coverage
+        working-directory: docs-bundle
+        run: >-
+          python3 scripts/check-docs-navigation-coverage.py
+          carina-rs aws
+          "$RUNNER_TEMP/carina-provider-aws-docs.tar.gz"
+
+  awscc:
+    name: carina-rs/awscc
+    needs: checker-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out docs bundle checker
+        uses: actions/checkout@v4
+        with:
+          path: docs-bundle
+      - name: Check out provider main
+        uses: actions/checkout@v4
+        with:
+          repository: carina-rs/carina-provider-awscc
+          ref: main
+          path: provider
+      - name: Build docs bundle
+        working-directory: provider
+        run: python3 scripts/docs-bundle.py build "$RUNNER_TEMP/carina-provider-awscc-docs.tar.gz"
+      - name: Check docs navigation coverage
+        working-directory: docs-bundle
+        run: >-
+          python3 scripts/check-docs-navigation-coverage.py
+          carina-rs awscc
+          "$RUNNER_TEMP/carina-provider-awscc-docs.tar.gz"

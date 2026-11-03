@@ -1,0 +1,40 @@
+[package]
+name = "carina-docs-bundle"
+version = "0.1.0"
+edition = "2021"
+description = "Validate and render Carina provider documentation bundles in an isolated worker"
+license = "MIT"
+repository = "https://github.com/carina-rs/carina-docs-bundle"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "carina-docs-bundle"
+path = "src/main.rs"
+
+[features]
+default = []
+test-support = []
+
+[dependencies]
+ammonia = "4.2.4"
+anyhow = "1"
+comrak = { version = "0.54.0", default-features = false }
+finl_unicode = { version = "1.4.0", default-features = false, features = ["categories"] }
+flate2 = "1.1.9"
+libc = "0.2"
+percent-encoding = "2.3"
+semver = "1.0.28"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "1"
+tokio = { version = "1", default-features = false, features = ["rt", "process", "io-util", "time", "macros"] }
+tracing = "0.1"
+uuid = { version = "1.24.0", features = ["v4"] }
+# syntect 5.3のparsing自体がdump-create/dump-loadを有効にするため、直接は指定しない。
+syntect = { version = "5", default-features = false, features = ["parsing", "default-syntaxes", "yaml-load", "html", "regex-fancy"] }
+
+[dev-dependencies]
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

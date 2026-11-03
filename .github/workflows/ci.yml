@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  fmt:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - run: cargo fmt --check
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --locked --all-targets --all-features -- -D warnings
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: python3 scripts/check-docs-bundle-dependencies.py
+      - run: cargo test --locked --all-targets --all-features
+      - run: cargo test --locked --doc --all-features
+      - run: python3 -m unittest discover -s tests -p 'test_check_docs_navigation_coverage.py'
+
+  install:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install from a clean Git checkout
+        run: >-
+          cargo install --locked
+          --git "file://$GITHUB_WORKSPACE" --rev "$GITHUB_SHA"
+          --root "$RUNNER_TEMP/docs-checker" carina-docs-bundle
+      - name: Run installed checker outside the checkout
+        run: |
+          cd "$RUNNER_TEMP"
+          python3 - <<'PY'
+          import io, tarfile
+          with tarfile.open('reference.tar.gz', 'w:gz', format=tarfile.PAX_FORMAT) as archive:
+              for path, body in [
+                  ('index.md', b'# Provider\n\n```crn\nlet answer = "safe"\n```\n'),
+                  ('resources/reference_resource.md', b'# reference.Resource\n'),
+                  ('data-sources/reference_data.md', b'# reference.DataSource\n'),
+              ]:
+                  info = tarfile.TarInfo(path)
+                  info.size = len(body)
+                  archive.addfile(info, io.BytesIO(body))
+          PY
+          "$RUNNER_TEMP/docs-checker/bin/carina-docs-bundle" check reference.tar.gz
+
+  heading-slug-fixture:
+    name: Heading slug fixture
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          remote_fixture=/tmp/provider-heading-slugs.json
+          curl -fsSL https://raw.githubusercontent.com/carina-rs/carina-provider-aws/main/carina-docgen/tests/fixtures/heading-slugs.json -o "$remote_fixture"
+          if ! cmp -s tests/fixtures/heading-slugs.json "$remote_fixture"; then
+            diff -u tests/fixtures/heading-slugs.json "$remote_fixture" || true
+            echo "The two copies must be updated together because this renderer is the source of truth and the provider docs generator checks itself against that table." >&2
+            exit 1
+          fi

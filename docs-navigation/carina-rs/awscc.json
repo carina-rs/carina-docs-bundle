@@ -1,0 +1,199 @@
+{
+  "services": [
+    {
+      "id": "budgets",
+      "title": "Budgets",
+      "resources": [
+        "budgets_budget"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "cloudfront",
+      "title": "CloudFront",
+      "resources": [
+        "cloudfront_distribution",
+        "cloudfront_function",
+        "cloudfront_origin_access_control",
+        "cloudfront_response_headers_policy"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "cloudwatch",
+      "title": "CloudWatch",
+      "resources": [
+        "cloudwatch_alarm"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "dynamodb",
+      "title": "DYNAMODB",
+      "resources": [
+        "dynamodb_table"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "ec2",
+      "title": "EC2",
+      "resources": [
+        "ec2_egress_only_internet_gateway",
+        "ec2_eip",
+        "ec2_flow_log",
+        "ec2_internet_gateway",
+        "ec2_ipam",
+        "ec2_ipam_pool",
+        "ec2_nat_gateway",
+        "ec2_route",
+        "ec2_route_table",
+        "ec2_security_group",
+        "ec2_security_group_egress",
+        "ec2_security_group_ingress",
+        "ec2_subnet",
+        "ec2_subnet_route_table_association",
+        "ec2_transit_gateway",
+        "ec2_transit_gateway_attachment",
+        "ec2_vpc",
+        "ec2_vpc_endpoint",
+        "ec2_vpc_gateway_attachment",
+        "ec2_vpc_peering_connection",
+        "ec2_vpn_gateway"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "ecr",
+      "title": "ECR",
+      "resources": [
+        "ecr_repository"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "ecs",
+      "title": "ECS",
+      "resources": [
+        "ecs_cluster"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "elasticloadbalancingv2",
+      "title": "Elastic Load Balancing v2",
+      "resources": [
+        "elasticloadbalancingv2_listener",
+        "elasticloadbalancingv2_load_balancer",
+        "elasticloadbalancingv2_target_group"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "iam",
+      "title": "IAM",
+      "resources": [
+        "iam_oidc_provider",
+        "iam_role",
+        "iam_role_policy"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "identitystore",
+      "title": "Identity Store",
+      "resources": [
+        "identitystore_group",
+        "identitystore_group_membership"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "kms",
+      "title": "KMS",
+      "resources": [
+        "kms_key"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "logs",
+      "title": "CloudWatch Logs",
+      "resources": [
+        "logs_log_group"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "organizations",
+      "title": "Organizations",
+      "resources": [
+        "organizations_account",
+        "organizations_organization"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "route53",
+      "title": "Route 53",
+      "resources": [
+        "route53_hosted_zone"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "s3",
+      "title": "S3",
+      "resources": [
+        "s3_bucket",
+        "s3_bucket_policy"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "scheduler",
+      "title": "EventBridge Scheduler",
+      "resources": [
+        "scheduler_schedule",
+        "scheduler_schedule_group"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "sns",
+      "title": "SNS",
+      "resources": [
+        "sns_subscription",
+        "sns_topic"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "ssm",
+      "title": "SSM",
+      "resources": [
+        "ssm_parameter"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "sso",
+      "title": "IAM Identity Center",
+      "resources": [
+        "sso_assignment",
+        "sso_instance",
+        "sso_permission_set"
+      ],
+      "data_sources": []
+    },
+    {
+      "id": "wafv2",
+      "title": "WAFv2",
+      "resources": [
+        "wafv2_web_acl",
+        "wafv2_web_acl_association"
+      ],
+      "data_sources": []
+    }
+  ]
+}
